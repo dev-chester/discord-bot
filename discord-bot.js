@@ -173,8 +173,8 @@ client.on('messageCreate', async message => {
 
   if (message.channel.id === DiscordChannels.ASSIGN_ROLES) {
     await handleAssignRoleCommand(message);
-  } else if (message.channel.id === DiscordChannels.WELCOME) {
-    await handleWelcomeMessage(message);
+  } else if (message.channel.id === DiscordChannels.INTRODUCE_YOURSELF) {
+    await handleWelcomeMessage(message, DiscordRoles.VERIFIED_MEMBERS, DiscordRoles.NEW_MEMBERS);
   }
 });
 

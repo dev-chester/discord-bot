@@ -15,25 +15,29 @@ async function handleAssignRoleCommand(message) {
     }
   }
 
-async function handleWelcomeMessage(message){
+async function handleWelcomeMessage(message, VERIFIED_MEMBER_ROLE_ID, NEW_MEMBER_ROLE_ID) {
 
-  const fbRegex = /^FB:\s*(https?:\/\/(?:www\.)?facebook\.com\/\S+)/m;
+  try {
 
-  const match = message.content.match(fbRegex);
-  if (match) {
-    const fbLink = match[1];
-    console.log('Extracted FB Link:', fbLink);
-    try {
-      await message.member.roles.add(VERIFIED_MEMBER_ROLE_ID);
-      await message.member.roles.remove(process.env.NEW_MEMBER_ROLE_ID);
-      
-      message.reply(`You have been assigned the "Verified Member" role! Enjoy your stay.`);
-    } catch (error) {
-      console.error('Error in handleWelcomeMessage:', error);
-      message.reply("There seems to be a problem assigning role and changing nickname.");
+    const fbRegex = /^FB:\s*(https?:\/\/(?:www\.)?facebook\.com\/\S+)/m;
+
+    const match = message.content.match(fbRegex);
+    if (match) {
+      const fbLink = match[1];
+      console.log('Extracted FB Link:', fbLink);
+      try {
+        await message.member.roles.add(VERIFIED_MEMBER_ROLE_ID);
+        await message.member.roles.remove(NEW_MEMBER_ROLE_ID);
+        
+        message.reply(`You are now a "Verified Member"! Please head on to #assign-roles channel and self assign a role. Enjoy your stay.`);
+      } catch (error) {
+        console.error('Error in handleWelcomeMessage:', error);
+      }
+    } else {
+      console.log('Message does not contain a valid FB link.');
     }
-  } else {
-    console.log('Message does not contain a valid FB link.');
+  }catch(err) {
+    console.error(`Error assigning role for ${message.author.tag}:`, err);
   }
 }
 
