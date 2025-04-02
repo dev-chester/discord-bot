@@ -63,7 +63,7 @@ const DiscordClient = Object.freeze({
 const { year, week } = getYearWeekPH();
 const dbFilename = `strava_${year}_week_${week}.db`;
 
-const dbPath = path.resolve(__dirname, `../strava-auth/${dbFilename}`); 
+const dbPath = path.resolve(__dirname, `../../ncc/strava-auth/${dbFilename}`); 
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error("Error opening database:", err.message);
@@ -147,7 +147,8 @@ client.on('ready', () => {
       status: 'online',
       activities: [{
         name: 'with code',
-        type: ActivityType.Playing 
+        type: ActivityType.Playing ,
+        url: 'https://github.com/dev-chester/discord-bot'
       }]
     });
     console.log("Presence set successfully.");
