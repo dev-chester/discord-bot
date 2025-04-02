@@ -148,6 +148,7 @@ client.on('ready', () => {
       activities: [{
         name: 'with code: https://github.com/dev-chester/discord-bot',
         type: ActivityType.Playing ,
+        url: "https://github.com/dev-chester/discord-bot"
       }]
     });
     console.log("Presence set successfully.");
