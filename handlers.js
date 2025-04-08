@@ -30,6 +30,7 @@ async function handleWelcomeMessage(message, VERIFIED_MEMBER_ROLE_ID, NEW_MEMBER
         await message.member.roles.remove(NEW_MEMBER_ROLE_ID);
         
         message.reply(`You are now a "Verified Member"! Please head on to #assign-roles channel and self assign a role. Enjoy your stay.`);
+        await message.author.send(`You are now a "Verified Member"! Please head on to the #assign-roles channel and self assign a role. Enjoy your stay.`);
       } catch (error) {
         console.error('Error in handleWelcomeMessage:', error);
       }
