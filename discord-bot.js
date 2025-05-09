@@ -7,6 +7,7 @@ const path = require('path');
 const { getYearWeekPH } = require('./util.js');
 const { handleAssignRoleCommand, handleWelcomeMessage, handleReaction } = require('./handlers.js');
 const { pingCommand, pingCommandHandler } = require('./util-commands/ping.js');
+const {  assignRoleGsheet, assignRoleFromGsheetHandler } = require('./on-demand/gsheet.js');
 const { echoCommand, modalSubmitHandler, echoCommandHandler } = require('./util-commands/echo.js');
 const { birthdayCommand, birthdayCommandHandler } = require('./util-commands/birthday.js');
 const { mypaceCommand, mypaceCommandHandler } = require('./util-commands/mypace.js');
