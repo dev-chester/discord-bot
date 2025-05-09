@@ -189,7 +189,8 @@ const rest = new REST({ version: '10' }).setToken(BOT_TOKEN);
           pingCommand, 
           echoCommand, 
           birthdayCommand, 
-          mypaceCommand
+          mypaceCommand,
+          assignRoleGsheet,
         ] }
     );
     console.log('Successfully registered slash commands.');
@@ -204,6 +205,11 @@ client.once('ready', () => {
 
 
 client.on('interactionCreate', async interaction => {
+
+  if(interaction.commandName === 'assignrole-from-gsheet') {
+    await assignRoleFromGsheetHandler(interaction);
+  }
+
   if (interaction.isModalSubmit() && interaction.customId.startsWith('echoModal|')) {
     await modalSubmitHandler(interaction);
   }
