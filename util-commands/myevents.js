@@ -63,7 +63,7 @@ async function myruneventCommandHandler(interaction /*, client if you need it */
       `• Distance: **${km} km**\n` +
       `• Target: **${target}**\n` +
       `• Size: **${size.toUpperCase()}**`,
-    ephemeral: true
+    ephemeral: false
   });
 }
 
