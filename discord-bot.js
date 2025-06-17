@@ -3,6 +3,7 @@ const { Client, GatewayIntentBits, REST, Routes, ActivityType
  } = require('discord.js');
 require('dotenv').config();
 const sqlite3 = require('sqlite3').verbose();
+const fs = require('fs');
 const path = require('path');
 const { getYearWeekPH } = require('./util.js');
 const { handleAssignRoleCommand, handleWelcomeMessage, handleReaction } = require('./handlers.js');
