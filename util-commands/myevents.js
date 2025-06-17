@@ -46,7 +46,7 @@ const myruneventCommand = new SlashCommandBuilder()
       .setRequired(false));
 
 /* ---------- interaction handler ---------- */
-async function myruneventCommandHandler(interaction /*, client if you need it */) {
+async function myruneventCommandHandler(interaction, client, db) {
   const race  = interaction.options.getString('event', true);
   const name  = interaction.options.getString('name', true);
   const km    = interaction.options.getNumber('kilometers', true);
