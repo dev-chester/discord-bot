@@ -64,7 +64,7 @@ async function myruneventCommandHandler(interaction, client, db) {
       interaction.user.id,
       interaction.user.tag,
       race,
-      pref,
+      name,
       km,
       target,
       size,
