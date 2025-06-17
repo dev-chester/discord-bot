@@ -66,6 +66,36 @@ const DiscordClient = Object.freeze({
 const { year, week } = getYearWeekPH();
 const dbFilename = `strava_${year}_week_${week}.db`;
 
+const dataDir = path.join(__dirname, 'data');
+if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir);          // create ./data if absent
+
+const runDbPath = path.join(dataDir, 'run_events.db');
+
+const runDb = new sqlite3.Database(runDbPath, (err) => {
+  if (err) {
+    console.error('❌  Error opening run_events.db', err.message);
+  } else {
+    console.log('📗  run_events.db ready');
+  }
+});
+
+/* create table once */
+runDb.serialize(() => {
+  runDb.run(
+    `CREATE TABLE IF NOT EXISTS run_signups (
+       id             INTEGER PRIMARY KEY AUTOINCREMENT,
+       user_id        TEXT NOT NULL,
+       username       TEXT NOT NULL,
+       event          TEXT NOT NULL,
+       preferred_name TEXT NOT NULL,
+       distance_km    REAL NOT NULL,
+       target_time    TEXT,
+       size           TEXT NOT NULL,
+       ts             INTEGER NOT NULL
+     )`
+  );
+});
+
 // const dbPath = path.resolve(__dirname, `../../ncc/strava-auth/${dbFilename}`); 
 // const db = new sqlite3.Database(dbPath, (err) => {
 //   if (err) {
@@ -237,7 +267,7 @@ client.on('interactionCreate', async interaction => {
   }
 
   if (interaction.commandName === 'myrunevent') {
-    await myruneventCommandHandler(interaction, client);
+    await myruneventCommandHandler(interaction, client, runDb);
   }
 
 });

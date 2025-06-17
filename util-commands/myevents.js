@@ -53,7 +53,26 @@ async function myruneventCommandHandler(interaction /*, client if you need it */
   const target= interaction.options.getString('target') ?? '—';
   const size  = interaction.options.getString('size', true);
 
-  // TODO: persist to DB / Google Sheet here
+  if (db) {
+    const stmt = db.prepare(
+      `INSERT INTO run_signups
+         (user_id, username, event, preferred_name,
+          distance_km, target_time, size, ts)
+       VALUES (?,?,?,?,?,?,?,?)`,
+    );
+    stmt.run(
+      interaction.user.id,
+      interaction.user.tag,
+      race,
+      pref,
+      km,
+      target,
+      size,
+      Date.now(),
+      (err) => err && console.error('DB insert error:', err.message),
+    );
+    stmt.finalize();
+  }
 
   await interaction.reply({
     content:
