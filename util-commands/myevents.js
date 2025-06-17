@@ -12,7 +12,8 @@ const RACE_EVENTS = [
   'Milo Marathon',
   'Manila Marathon',
   'Race for Life',
-  'Pampanga Marathon'
+  'Pampanga Marathon',
+  'Capas 32KM'
 ];
 
 const SIZES = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl'];
