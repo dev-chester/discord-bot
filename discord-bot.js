@@ -11,6 +11,7 @@ const {  assignRoleGsheet, assignRoleFromGsheetHandler } = require('./on-demand/
 const { echoCommand, modalSubmitHandler, echoCommandHandler } = require('./util-commands/echo.js');
 const { birthdayCommand, birthdayCommandHandler } = require('./util-commands/birthday.js');
 const { mypaceCommand, mypaceCommandHandler } = require('./util-commands/mypace.js');
+const { myruneventCommand, myruneventCommandHandler } = require('./util-commands/myevents.js');
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 
@@ -34,6 +35,7 @@ const DiscordChannels = Object.freeze({
   TARLAC_CITY: '1344944489139273769',
   LSD: '1344949309950656532',
   MUL: '1345322831159889972',
+  FUN_RUN_ROSTERS: '1381472941488869457'
 });
 
 const DiscordRoles = Object.freeze({
@@ -192,6 +194,7 @@ const rest = new REST({ version: '10' }).setToken(BOT_TOKEN);
           birthdayCommand, 
           mypaceCommand,
           assignRoleGsheet,
+          myruneventCommand
         ] }
     );
     console.log('Successfully registered slash commands.');
@@ -231,6 +234,10 @@ client.on('interactionCreate', async interaction => {
 
   if (interaction.commandName === 'mypace'){
     await mypaceCommandHandler(interaction, client);
+  }
+
+  if (interaction.commandName === 'myrunevent') {
+    await myruneventCommandHandler(interaction, client);
   }
 
 });
