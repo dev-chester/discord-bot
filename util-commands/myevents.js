@@ -36,14 +36,14 @@ const myruneventCommand = new SlashCommandBuilder()
       .setRequired(true)
       .setMinValue(0.1))
   .addStringOption((o) =>
-    o.setName('target')
-      .setDescription('Target time (free text)')
-      .setRequired(false))
-  .addStringOption((o) =>
     o.setName('size')
       .setDescription('Shirt size')
       .setRequired(true)
-      .addChoices(...SIZES.map((s) => ({ name: s.toUpperCase(), value: s }))));
+      .addChoices(...SIZES.map((s) => ({ name: s.toUpperCase(), value: s }))))
+    .addStringOption((o) =>
+    o.setName('target')
+      .setDescription('Target time (free text)')
+      .setRequired(false));
 
 /* ---------- interaction handler ---------- */
 async function myruneventCommandHandler(interaction /*, client if you need it */) {
