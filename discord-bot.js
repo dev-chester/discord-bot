@@ -14,6 +14,7 @@ const { birthdayCommand, birthdayCommandHandler } = require('./util-commands/bir
 const { mypaceCommand, mypaceCommandHandler } = require('./util-commands/mypace.js');
 const { myruneventCommand, myruneventCommandHandler } = require('./util-commands/myevents.js');
 const { upcomingEventsCommand, upcomingEventsHandler, handleUpcomingEventsButton } = require('./util-commands/upcomingevents.js');
+const { shoeSpecsCommand, shoeCommandHandler } = require('./util-commands/shoespec.js');
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 
@@ -227,7 +228,8 @@ const rest = new REST({ version: '10' }).setToken(BOT_TOKEN);
           mypaceCommand,
           assignRoleGsheet,
           myruneventCommand,
-          upcomingEventsCommand
+          upcomingEventsCommand,
+          shoeSpecsCommand
         ] }
     );
     console.log('Successfully registered slash commands.');
@@ -290,6 +292,10 @@ client.on('interactionCreate', async interaction => {
 
   if (interaction.commandName === 'upcoming-events') {
     await upcomingEventsHandler(interaction, process.env.BASE_KM_URL);
+  }
+
+  if (interaction.commandName === 'shoespec') {
+    await shoeCommandHandler(interaction);
   }
 
   if (!interaction.isChatInputCommand()) return; 
