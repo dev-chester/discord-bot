@@ -294,7 +294,7 @@ client.on('interactionCreate', async interaction => {
     await upcomingEventsHandler(interaction, process.env.BASE_KM_URL);
   }
 
-  if (interaction.commandName === 'shoespec') {
+  if (interaction.commandName === 'shoe-specs') {
     await shoeCommandHandler(interaction);
   }
 
