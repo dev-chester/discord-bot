@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const axios = require('axios');
 
-const PAGE_SIZE = 5;  // Number of events per page
+const PAGE_SIZE = 10;  // Number of events per page
 const eventCache = new Map();  // messageId -> { events, timestamp }
 
 const upcomingEventsCommand = new SlashCommandBuilder()
@@ -19,6 +19,7 @@ async function fetchEvents(API_URL) {
 }
 
 function buildEventsEmbed(events, page) {
+  console.log(events, page);
   const embed = new EmbedBuilder()
     .setTitle(`🏃 Upcoming Run Events (Page ${page + 1})`)
     .setColor(0x00AEFF)
@@ -38,7 +39,7 @@ function buildEventsEmbed(events, page) {
 
     embed.addFields({
       name: `🏁 **${event.name}**`,
-      value: `📅 **${dateStr}**\n📍 **${event.locationCity}, ${event.locationStateOrProvince.name}**\n📏 **${distances}**`,
+      value: `📅 **${dateStr}**\n📍 **${event.locationCity}, ${event.locationStateOrProvince.name}**\n📏 **${distances}**\n`,
       inline: false
     });
   });
