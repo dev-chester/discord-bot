@@ -255,7 +255,7 @@ client.on('interactionCreate', async interaction => {
     await echoCommandHandler(interaction);
   }
 
-  if (!interaction.isChatInputCommand()) return; 
+  
   
   if (interaction.commandName === 'ping') {
     pingCommandHandler(interaction);
@@ -278,13 +278,21 @@ client.on('interactionCreate', async interaction => {
       interaction.customId.startsWith('next_') || 
       interaction.customId.startsWith('refresh_'))
     ) {
-    await handleUpcomingEventsButton(interaction, process.env.BASE_KM_URL);
+      try{
+        console.log("triggered button interaction:", interaction.customId);
+        await handleUpcomingEventsButton(interaction, process.env.BASE_KM_URL);
+        return;   
+      }catch(err){
+        console.error('Error in handleUpcomingEventsButton:', err);
+      }
+      
   }
 
   if (interaction.commandName === 'upcoming-events') {
     await upcomingEventsHandler(interaction, process.env.BASE_KM_URL);
   }
 
+  if (!interaction.isChatInputCommand()) return; 
 });
 
 client.login(BOT_TOKEN);
