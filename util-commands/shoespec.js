@@ -28,12 +28,14 @@ function grab(html, label, rx){
 async function findProductUrl(query) {
     try {
         const q = encodeURIComponent(query);
+
+        console.log(`https://runrepeat.com/search?q=${q}`)
         const { data } = await axios.get(
             `https://runrepeat.com/search?q=${q}`,
             { headers }
         );
 
-        console.log("data:", data.slice(0, 100)); // log first 100 chars for debugging
+        console.log("data:", data); // log first 100 chars for debugging
         const $ = cheerio.load(data);
         // first result link
         const first = $('a.result-card, a.flex').first().attr('href');
