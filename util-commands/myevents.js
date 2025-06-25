@@ -44,7 +44,7 @@ const myruneventCommand = new SlashCommandBuilder()
       .addChoices(...SIZES.map((s) => ({ name: s.toUpperCase(), value: s }))))
     .addStringOption((o) =>
     o.setName('target')
-      .setDescription('Target time (free text)')
+      .setDescription('Target time (OPTIONAL)')
       .setRequired(false));
 
 /* ---------- interaction handler ---------- */

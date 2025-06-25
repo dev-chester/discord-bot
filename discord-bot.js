@@ -13,6 +13,7 @@ const { echoCommand, modalSubmitHandler, echoCommandHandler } = require('./util-
 const { birthdayCommand, birthdayCommandHandler } = require('./util-commands/birthday.js');
 const { mypaceCommand, mypaceCommandHandler } = require('./util-commands/mypace.js');
 const { myruneventCommand, myruneventCommandHandler } = require('./util-commands/myevents.js');
+const { upcomingEventsCommand, upcomingEventsHandler, handleUpcomingEventsButton } = require('./util-commands/upcomingevents.js');
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 
@@ -225,7 +226,8 @@ const rest = new REST({ version: '10' }).setToken(BOT_TOKEN);
           birthdayCommand, 
           mypaceCommand,
           assignRoleGsheet,
-          myruneventCommand
+          myruneventCommand,
+          upcomingEventsCommand
         ] }
     );
     console.log('Successfully registered slash commands.');
@@ -269,6 +271,18 @@ client.on('interactionCreate', async interaction => {
 
   if (interaction.commandName === 'myrunevent') {
     await myruneventCommandHandler(interaction, client, runDb);
+  }
+
+  if (interaction.isButton() && 
+      (interaction.customId.startsWith('prev_') || 
+      interaction.customId.startsWith('next_') || 
+      interaction.customId.startsWith('refresh_'))
+    ) {
+    await handleUpcomingEventsButton(interaction, process.env.BASE_KM_URL);
+  }
+
+  if (interaction.commandName === 'upcoming-events') {
+    await upcomingEventsHandler(interaction, process.env.BASE_KM_URL);
   }
 
 });
