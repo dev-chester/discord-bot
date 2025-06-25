@@ -26,19 +26,24 @@ function grab(html, label, rx){
 
 /* ---------- helpers ---------- */
 async function findProductUrl(query) {
-  const q = encodeURIComponent(query);
-  const { data } = await axios.get(
-    `https://runrepeat.com/search?q=${q}`,
-    { headers }
-  );
+    try {
+        const q = encodeURIComponent(query);
+        const { data } = await axios.get(
+            `https://runrepeat.com/search?q=${q}`,
+            { headers }
+        );
 
-  console.log("data:", data.slice(0, 100)); // log first 100 chars for debugging
-  const $ = cheerio.load(data);
-  // first result link
-  const first = $('a.result-card, a.flex').first().attr('href');
-  if (first) return 'https://runrepeat.com' + first;
-  // naive fallback slug
-  return 'https://runrepeat.com/' + query.toLowerCase().replace(/\s+/g, '-');
+        console.log("data:", data.slice(0, 100)); // log first 100 chars for debugging
+        const $ = cheerio.load(data);
+        // first result link
+        const first = $('a.result-card, a.flex').first().attr('href');
+        if (first) return 'https://runrepeat.com' + first;
+        // naive fallback slug
+        return 'https://runrepeat.com/' + query.toLowerCase().replace(/\s+/g, '-');
+    }catch(err){
+      console.error("Error finding product URL:", err);
+      return null;
+    }
 }
 
 const cache = new Map();
