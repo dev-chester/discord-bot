@@ -76,7 +76,9 @@ async function shoeCommandHandler(interaction){
 
   try{
     const query  = interaction.options.getString('query', true);
+    console.log("query:", query);
     const pUrl   = await findProductUrl(query);
+    console.log("product URL:", pUrl);
     const specs  = await scrapeSpecs(pUrl);
 
     lastScrape = Date.now(); // update the global timer here
