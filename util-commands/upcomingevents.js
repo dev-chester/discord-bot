@@ -19,7 +19,6 @@ async function fetchEvents(API_URL) {
 }
 
 function buildEventsEmbed(events, page) {
-  console.log(events, page);
   const embed = new EmbedBuilder()
     .setTitle(`🏃 Upcoming Run Events (Page ${page + 1})`)
     .setColor(0x00AEFF)
@@ -100,7 +99,6 @@ async function handleUpcomingEventsButton(interaction, API_URL) {
   const [action, rawPage] = interaction.customId.split('_', 2);
   let newPage = parseInt(rawPage, 10);
 
-  console.log("Button clicked:", interaction.customId, "→ page", newPage);
 
   await interaction.deferUpdate();
 
