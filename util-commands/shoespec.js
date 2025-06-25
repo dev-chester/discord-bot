@@ -31,6 +31,8 @@ async function findProductUrl(query) {
     `https://runrepeat.com/search?q=${q}`,
     { headers }
   );
+
+  console.log("data:", data.slice(0, 100)); // log first 100 chars for debugging
   const $ = cheerio.load(data);
   // first result link
   const first = $('a.result-card, a.flex').first().attr('href');
