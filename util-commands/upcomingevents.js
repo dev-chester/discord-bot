@@ -87,32 +87,26 @@ async function upcomingEventsHandler(interaction, API_URL) {
   const embed = buildEventsEmbed(events, page);
   const row = buildPaginationRow(page, totalPages);
 
-  await interaction.editReply({
+  const message = await interaction.editReply({
     embeds: [embed],
     components: [row]
   });
+
+  eventCache.set(message.id, { events, timestamp: Date.now() });
 
   // Optionally, cache events in memory if you'd rather not re-fetch on button press
 }
 async function handleUpcomingEventsButton(interaction, API_URL) {
   const [action, rawPage] = interaction.customId.split('_', 2);
-  let currentPage = parseInt(rawPage, 10);
+  let newPage = parseInt(rawPage, 10);
 
-  console.log("currentPage:", currentPage, "action:", action);
-  if (isNaN(currentPage)) currentPage = 0;
-
-  let newPage = currentPage;
-  if (action === 'prev') {
-    newPage = Math.max(currentPage - 1, 0);
-  } else if (action === 'next') {
-    newPage = currentPage + 1;
-  }
+  console.log("Button clicked:", interaction.customId, "→ page", newPage);
 
   await interaction.deferUpdate();
 
   let events;
+
   if (action === 'refresh') {
-    // Only fetch new data on refresh
     events = await fetchEvents(API_URL);
     if (!events || events.length === 0) {
       await interaction.message.edit({
@@ -125,12 +119,11 @@ async function handleUpcomingEventsButton(interaction, API_URL) {
     }
     eventCache.set(interaction.message.id, { events, timestamp: Date.now() });
   } else {
-    // For prev/next, use cached data
     const cache = eventCache.get(interaction.message.id);
     if (!cache) {
       const row = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
-          .setCustomId(`refresh_${currentPage}`)
+          .setCustomId(`refresh_${newPage}`)
           .setLabel('🔄 Refresh')
           .setStyle(ButtonStyle.Primary)
       );
