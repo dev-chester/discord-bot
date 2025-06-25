@@ -39,7 +39,7 @@ function buildEventsEmbed(events, page) {
 
     embed.addFields({
       name: `🏁 **${event.name}**`,
-      value: `📅 **${dateStr}**\n📍 **${event.locationCity}, ${event.locationStateOrProvince.name}**\n📏 **${distances}**\n`,
+      value: `\n📅 **${dateStr}**\n📍 **${event.locationCity}, ${event.locationStateOrProvince.name}**\n📏 **${distances}**\n`,
       inline: false
     });
   });
@@ -50,12 +50,12 @@ function buildEventsEmbed(events, page) {
 function buildPaginationRow(page, totalPages) {
   return new ActionRowBuilder().addComponents(
     new ButtonBuilder()
-      .setCustomId(`prev_${page}`)
+      .setCustomId(`prev_${page - 1}`)
       .setLabel('⬅ Prev')
       .setStyle(ButtonStyle.Secondary)
       .setDisabled(page === 0),
     new ButtonBuilder()
-      .setCustomId(`next_${page}`)
+      .setCustomId(`next_${page + 1}`)
       .setLabel('Next ➡')
       .setStyle(ButtonStyle.Secondary)
       .setDisabled(page >= totalPages - 1),
@@ -97,6 +97,8 @@ async function upcomingEventsHandler(interaction, API_URL) {
 async function handleUpcomingEventsButton(interaction, API_URL) {
   const [action, rawPage] = interaction.customId.split('_', 2);
   let currentPage = parseInt(rawPage, 10);
+
+  console.log("currentPage:", currentPage, "action:", action);
   if (isNaN(currentPage)) currentPage = 0;
 
   let newPage = currentPage;
